@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Fin demo</title>
+  <style>
+    :root {
+      --bg-primary: #f8f9fa;
+      --bg-secondary: white;
+      --text-primary: #333;
+      --text-secondary: #64748b;
+      --accent-color: #2563eb;
+      --border-color: #e2e8f0;
+      --tag-bg: #e2e8f0;
+      --tag-text: #475569;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2d2d2d;
+      --text-primary: #e5e5e5;
+      --text-secondary: #a3a3a3;
+      --accent-color: #60a5fa;
+      --border-color: #404040;
+      --tag-bg: #404040;
+      --tag-text: #d1d5db;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: var(--bg-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .header {
+      background-color: var(--bg-secondary);
+      box-shadow: 0 1px 3px var(--shadow-color);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent-color);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-color);
+    }
+
+    .theme-switch {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-switch:hover {
+      color: var(--accent-color);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .search-container {
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      padding-left: 3rem;
+      font-size: 1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+
+    .search-bar:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-bar::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+    }
+
+    .popular-topics {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .topic-tag {
+      background-color: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .topic-tag:hover {
+      filter: brightness(90%);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">Docs</div>
+    <nav class="nav-links">
+      <a href="#">Guides</a>
+      <a href="#">API</a>
+      <a href="#">Examples</a>
+      <a href="#">Community</a>
+      <button class="theme-switch" aria-label="Toggle dark mode">
+        <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Moon icon -->
+          <path class="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" style="display: none;"/>
+          <!-- Sun icon -->
+          <g class="sun">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </g>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1>Get help</h1>
+    <p>Search our documentation for guides, API references, and examples.</p>
+
+    <div class="search-container">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 3C11.5376 3 14 5.46243 14 8.5C14 9.83879 13.5217 11.0659 12.7266 12.0196L16.8536 16.1464C17.0488 16.3417 17.0488 16.6583 16.8536 16.8536C16.6583 17.0488 16.3417 17.0488 16.1464 16.8536L12.0196 12.7266C11.0659 13.5217 9.83879 14 8.5 14C5.46243 14 3 11.5376 3 8.5C3 5.46243 5.46243 3 8.5 3ZM8.5 4C6.01472 4 4 6.01472 4 8.5C4 10.9853 6.01472 13 8.5 13C10.9853 13 13 10.9853 13 8.5C13 6.01472 10.9853 4 8.5 4Z" fill="currentColor"/>
+      </svg>
+      <input type="search" class="search-bar" placeholder="Ask our AI a question..." id="search-input">
+    </div>
+
+    <div class="popular-topics">
+      <span class="topic-tag">Getting Started</span>
+      <span class="topic-tag">API Reference</span>
+      <span class="topic-tag">Tutorials</span>
+      <span class="topic-tag">Best Practices</span>
+    </div>
+  </main>
+
+  <script>
+    /* Update the Dark mode switcher script */
+    const themeSwitch = document.querySelector('.theme-switch');
+    const htmlElement = document.documentElement;
+    const moonIcon = document.querySelector('.moon');
+    const sunIcon = document.querySelector('.sun');
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+
+    themeSwitch.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+    });
+
+    function setTheme(theme) {
+      htmlElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+
+      // Update icon visibility
+      if (theme === 'dark') {
+        moonIcon.style.display = 'block';
+        sunIcon.style.display = 'none';
+      } else {
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'block';
+      }
+    }
+
+    /* Trigger Fin from Search bar */
+    const searchInput = document.getElementById('search-input');
+    searchInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        try {
+          const query = searchInput.value;
+          Intercom('showNewMessage', query);
+          setTimeout(() => {}, 200);
+          Intercom('private:sendMessage', query);
+          searchInput.value = '';
+        } catch (error) {
+          Intercom('hide')
+          console.error(error);
+        }
+      }
+    });
+    /* Intercom Messenger */
+    window.intercomSettings = {
+      app_id: "idng7qnk"
+    };
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/YOUR_APP_ID_HERE';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+  </script>
+</body>
+</html>
