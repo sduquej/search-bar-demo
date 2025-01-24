@@ -250,8 +250,9 @@
         try {
           const query = searchInput.value;
           Intercom('showNewMessage', query);
-          setTimeout(() => {}, 200);
-          Intercom('private:sendMessage', query);
+          setTimeout(() => {
+            Intercom('private:sendMessage', query);
+          }, 100);
           searchInput.value = '';
         } catch (error) {
           Intercom('hide')
